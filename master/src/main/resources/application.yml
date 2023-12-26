@@ -7,11 +7,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
-    show-sql: true
+    show-sql: false
     properties:
-      hibernate:
-        format_sql: true
       database: postgresql
       database-platform: org.hibernate.dialect.PostgreSQLDialect
+
 server:
   port: 8080
+
+
