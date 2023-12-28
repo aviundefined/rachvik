@@ -12,7 +12,7 @@ spring:
       database: postgresql
       database-platform: org.hibernate.dialect.PostgreSQLDialect
 server:
-  port: 8091
+  port: 8082
 grpc:
   server:
     port: 5556
