@@ -11,11 +11,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class TinyURLServiceGrpcClient implements GrpcClient<TinyUrlServiceBlockingStub> {
+public class TinyURLServiceGrpcClient {
 
   private final ClientConfigReader configReader;
 
-  @Override
   public TinyUrlServiceBlockingStub getStub() {
     val grpcClientConfig = configReader.getGrpcClientConfig(service());
     return TinyUrlServiceGrpc.newBlockingStub(
@@ -24,7 +23,6 @@ public class TinyURLServiceGrpcClient implements GrpcClient<TinyUrlServiceBlocki
             .build());
   }
 
-  @Override
   public Service service() {
     return Service.SERVICE_TINYURL;
   }

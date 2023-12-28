@@ -11,11 +11,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class IdServiceGrpcClient implements GrpcClient<UniqueIdServiceBlockingStub> {
+public class IdServiceGrpcClient {
 
   private final ClientConfigReader configReader;
 
-  @Override
   public UniqueIdServiceBlockingStub getStub() {
     val grpcClientConfig = configReader.getGrpcClientConfig(service());
     return UniqueIdServiceGrpc.newBlockingStub(
@@ -24,7 +23,6 @@ public class IdServiceGrpcClient implements GrpcClient<UniqueIdServiceBlockingSt
             .build());
   }
 
-  @Override
   public Service service() {
     return Service.SERVICE_ID;
   }
