@@ -59,6 +59,7 @@
         </configuration>
       </plugin>
     </plugins>
+    <finalName>rachvik-id</finalName>
   </build>
 
 </project>
