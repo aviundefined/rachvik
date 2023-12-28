@@ -17,6 +17,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <apache.common.version>3.14.0</apache.common.version>
     <lombok.version>1.18.30</lombok.version>
+      <java.version>17</java.version>
   </properties>
 
   <dependencies>
