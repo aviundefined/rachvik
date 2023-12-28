@@ -4,6 +4,5 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
 
 @Configuration
-@EnableCassandraRepositories("com.rachvik.tinyurl")
-public class ApplicationConfig {
-}
+@EnableCassandraRepositories(basePackages="com.rachvik.tinyurl.respository")
+public class ApplicationConfig {}

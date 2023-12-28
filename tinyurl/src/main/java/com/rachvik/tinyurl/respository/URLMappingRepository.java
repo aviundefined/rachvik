@@ -4,7 +4,9 @@ import com.rachvik.tinyurl.entity.URLMapping;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 
 import java.util.Optional;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface URLMappingRepository extends CassandraRepository<URLMapping, Long> {
 
     Optional<URLMapping> findByShortURL(final String shortURL);

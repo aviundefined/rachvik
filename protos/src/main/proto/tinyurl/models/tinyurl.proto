@@ -1,11 +1,11 @@
 syntax = "proto3";
 option java_multiple_files = true;
 option java_package = "com.rachvik.tinyurl";
-package tinyurl;
 
 message ShortURLRequest {
   string user_id = 1;
   string original_url = 2;
+  bool create_if_not_exists = 3;
 }
 
 message OriginalURLRequest {

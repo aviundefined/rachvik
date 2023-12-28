@@ -4,6 +4,6 @@ option java_package = "com.rachvik.tinyurl";
 import "tinyurl/models/tinyurl.proto";
 
 service TinyUrlService {
-  rpc getShortURL(tinyurl.ShortURLRequest) returns (tinyurl.TinyURLResponse) {};
-  rpc getOriginalURL(tinyurl.OriginalURLRequest) returns (tinyurl.TinyURLResponse) {};
+  rpc getShortURL(ShortURLRequest) returns (TinyURLResponse) {};
+  rpc getOriginalURL(OriginalURLRequest) returns (TinyURLResponse) {};
 }

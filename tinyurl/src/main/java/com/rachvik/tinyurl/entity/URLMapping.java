@@ -14,9 +14,8 @@ import org.springframework.data.cassandra.core.mapping.Table;
 @Builder
 public class URLMapping {
 
-    @PrimaryKey
-    private long id;
-    private String shortURL;
-    private String originalURL;
-    private String userId;
+  @PrimaryKey private long id;
+  private String shortURL;
+  private String originalURL;
+  private String userId;
 }
