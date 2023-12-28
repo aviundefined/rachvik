@@ -52,7 +52,7 @@ public class JWTService {
   }
 
   private boolean isTokenExpired(final String token) {
-    return extractClaim(token, Claims::getExpiration).before(new Date());
+    return extractClaim(token, Claims::getExpiration).before(new Date(System.currentTimeMillis()));
   }
 
   private <T> T extractClaim(final String token, final Function<Claims, T> claimResolver) {
