@@ -6,6 +6,7 @@ target/
 ### IntelliJ IDEA ###
 .idea/
 .idea/**
+.idea/*
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml
@@ -13,6 +14,8 @@ target/
 *.iws
 *.iml
 *.ipr
+**/.mvn
+**/
 
 ### Eclipse ###
 .apt_generated
