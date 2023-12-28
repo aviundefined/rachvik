@@ -1,0 +1,20 @@
+syntax = "proto3";
+option java_multiple_files = true;
+option java_package = "com.rachvik.clients.grpc.config";
+
+enum Service {
+  SERVICE_UNKNOWN = 0;
+  SERVICE_ID = 1;
+  SERVICE_TINYURL = 2;
+  SERVICE_MASTER = 3;
+}
+
+message ClientConfig {
+  Service service = 1;
+  string host = 2;
+  int32 port = 3;
+}
+
+message ClientConfigs {
+  repeated ClientConfig grpc_config = 1;
+}
