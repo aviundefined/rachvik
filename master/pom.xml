@@ -88,6 +88,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>rachvik-master</finalName>
     </build>
 
 </project>
