@@ -1,6 +1,0 @@
-com/rachvik/clients/ClientsApplication.class
-com/rachvik/clients/config/helper/ClientConfigReader.class
-com/rachvik/clients/service/TinyURLServiceGrpcClient.class
-com/rachvik/clients/config/ClientConfiguration.class
-com/rachvik/clients/service/GrpcClient.class
-com/rachvik/clients/service/IdServiceGrpcClient.class
