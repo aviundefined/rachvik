@@ -16,7 +16,7 @@ public class IdService {
 
   public UniqueIdResponse getUniqueId(final UniqueIdRequest request) {
     uniqueIdRepository.upsert(request.getServiceName(), START_ID);
-    val uniqueId = uniqueIdRepository.findByServiceName(request.getServiceName()).orElseThrow();
+    val uniqueId = uniqueIdRepository.findById(request.getServiceName()).orElseThrow();
     return UniqueIdResponse.newBuilder()
         .setServiceName(request.getServiceName())
         .setId(uniqueId.getId())
