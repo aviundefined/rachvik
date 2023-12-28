@@ -42,6 +42,11 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-cassandra</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.rachvik</groupId>
+      <artifactId>clients</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 
   <build>
