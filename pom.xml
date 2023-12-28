@@ -9,8 +9,9 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
-    <module>common</module>
     <module>protos</module>
+    <module>common</module>
+    <module>clients</module>
     <module>master</module>
     <module>tinyurl</module>
     <module>id</module>

@@ -1,0 +1,10 @@
+grpc_config {
+  service: SERVICE_TINYURL
+  host: "localhost"
+  port: 5555
+}
+grpc_config {
+  service: SERVICE_ID
+  host: "localhost"
+  port: 5556
+}
