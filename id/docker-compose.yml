@@ -4,7 +4,7 @@ services:
     image: "iitkavinash/rachvik-id:latest"
     container_name: "rachvik_id"
     environment:
-      SERVER_PORT: "5556"
+      SERVER_PORT: "9091"
       SPRING_PROFILE: "prod"
     ports:
-      - "5556:5556"
+      - "9091:5556"
