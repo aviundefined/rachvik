@@ -6,9 +6,9 @@ import com.rachvik.id.UniqueIdServiceGrpc;
 import com.rachvik.id.service.IdService;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import net.devh.boot.grpc.server.service.GrpcService;
 
-@Component
+@GrpcService
 @RequiredArgsConstructor
 public class IdGrpcServiceImpl extends UniqueIdServiceGrpc.UniqueIdServiceImplBase {
 

@@ -7,23 +7,25 @@ import com.rachvik.tinyurl.TinyUrlServiceGrpc;
 import com.rachvik.tinyurl.service.TinyURLService;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import net.devh.boot.grpc.server.service.GrpcService;
 
-@Component
+@GrpcService
 @RequiredArgsConstructor
 public class TinyURLGrpcServiceImpl extends TinyUrlServiceGrpc.TinyUrlServiceImplBase {
 
-    private final TinyURLService tinyURLService;
+  private final TinyURLService tinyURLService;
 
-    @Override
-    public void getShortURL(final ShortURLRequest request, final StreamObserver<TinyURLResponse> responseObserver) {
-        responseObserver.onNext(tinyURLService.getShortURL(request));
-        responseObserver.onCompleted();
-    }
+  @Override
+  public void getShortURL(
+      final ShortURLRequest request, final StreamObserver<TinyURLResponse> responseObserver) {
+    responseObserver.onNext(tinyURLService.getShortURL(request));
+    responseObserver.onCompleted();
+  }
 
-    @Override
-    public void getOriginalURL(final OriginalURLRequest request, final StreamObserver<TinyURLResponse> responseObserver) {
-        responseObserver.onNext(tinyURLService.getOriginalURL(request));
-        responseObserver.onCompleted();
-    }
+  @Override
+  public void getOriginalURL(
+      final OriginalURLRequest request, final StreamObserver<TinyURLResponse> responseObserver) {
+    responseObserver.onNext(tinyURLService.getOriginalURL(request));
+    responseObserver.onCompleted();
+  }
 }
