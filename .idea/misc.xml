@@ -9,6 +9,7 @@
         <option value="$PROJECT_DIR$/tinyurl/pom.xml" />
         <option value="$PROJECT_DIR$/id/pom.xml" />
         <option value="$PROJECT_DIR$/clients/pom.xml" />
+        <option value="$PROJECT_DIR$/kafka-demo/pom.xml" />
       </list>
     </option>
     <option name="workspaceImportForciblyTurnedOn" value="true" />

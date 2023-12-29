@@ -15,6 +15,7 @@
     <module>master</module>
     <module>tinyurl</module>
     <module>id</module>
+    <module>kafka-demo</module>
   </modules>
 
   <properties>
