@@ -1,4 +1,4 @@
-package com.rachvik.master.services;
+package com.rachvik.master.tinyurl.services;
 
 import com.rachvik.clients.TinyURLServiceGrpcClient;
 import com.rachvik.tinyurl.OriginalURLRequest;

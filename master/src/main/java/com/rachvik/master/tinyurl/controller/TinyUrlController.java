@@ -1,6 +1,6 @@
-package com.rachvik.master.controller;
+package com.rachvik.master.tinyurl.controller;
 
-import com.rachvik.master.services.TinyUrlService;
+import com.rachvik.master.tinyurl.services.TinyUrlService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
