@@ -1,11 +1,13 @@
 package com.rachvik.master.tinyurl.controller;
 
+import com.rachvik.master.tinyurl.models.UrlRequest;
+import com.rachvik.master.tinyurl.models.UrlResponse;
 import com.rachvik.master.tinyurl.services.TinyUrlService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -14,13 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class TinyUrlController {
 
   private final TinyUrlService tinyUrlService;
-  @GetMapping("/short")
-  public ResponseEntity<String> getShortUrl(@RequestParam("url") final String originalUrl) {
-    return ResponseEntity.ok(tinyUrlService.getShortUrl(originalUrl));
+
+  @PostMapping("/short")
+  public ResponseEntity<UrlResponse> getShortUrl(@RequestBody final UrlRequest request) {
+    return ResponseEntity.ok(tinyUrlService.getShortUrl(request));
   }
 
-  @GetMapping("/original")
-  public ResponseEntity<String> getOriginalUrl(@RequestParam("url") final String shortUrl) {
-    return ResponseEntity.ok(tinyUrlService.getOriginalUrl(shortUrl));
+  @PostMapping("/original")
+  public ResponseEntity<UrlResponse> getOriginalUrl(@RequestBody final UrlRequest request) {
+    return ResponseEntity.ok(tinyUrlService.getOriginalUrl(request));
   }
 }
