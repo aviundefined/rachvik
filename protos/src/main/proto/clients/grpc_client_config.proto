@@ -7,6 +7,8 @@ enum Service {
   SERVICE_ID = 1;
   SERVICE_TINYURL = 2;
   SERVICE_MASTER = 3;
+  SERVICE_PROFILE = 4;
+  SERVICE_RUMMY = 5;
 }
 
 message ClientConfig {

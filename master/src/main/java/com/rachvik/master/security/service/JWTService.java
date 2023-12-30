@@ -1,6 +1,6 @@
 package com.rachvik.master.security.service;
 
-import com.rachvik.master.security.entity.User;
+import com.rachvik.profile.user.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -29,9 +29,9 @@ public class JWTService {
     return extractClaim(token, Claims::getSubject);
   }
 
-  public boolean isValid(final String token, final User user) {
-    val username = extractUsername(token);
-    if (!user.getEmail().equals(username)) {
+  public boolean isValid(final String token, final String username) {
+    val usernameInToken = extractUsername(token);
+    if (!username.equals(usernameInToken)) {
       return false;
     }
     return !isTokenExpired(token);
@@ -44,7 +44,7 @@ public class JWTService {
   public String generateToken(final User user, final Map<String, Object> extraClaims) {
     return Jwts.builder()
         .setClaims(extraClaims)
-        .setSubject(user.getEmail())
+        .setSubject(user.getUsername())
         .setIssuedAt(new Date(System.currentTimeMillis()))
         .setExpiration(new Date(System.currentTimeMillis() + EXPIRY_MS))
         .signWith(getSigningKey(), SignatureAlgorithm.HS256)

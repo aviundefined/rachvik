@@ -12,10 +12,13 @@
     <module>protos</module>
     <module>common</module>
     <module>clients</module>
+    <module>games</module>
     <module>master</module>
     <module>tinyurl</module>
     <module>id</module>
     <module>kafka-demo</module>
+    <module>rummy</module>
+    <module>profile</module>
   </modules>
 
   <properties>

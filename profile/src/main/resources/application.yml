@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/rachvik
+    username: postgres
+    password: my_password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      database: postgresql
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: 8085
+
+grpc:
+  server:
+    port: 5559
+

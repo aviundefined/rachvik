@@ -1,12 +1,13 @@
 package com.rachvik.master;
 
 import com.rachvik.clients.ClientConfigReader;
+import com.rachvik.clients.ProfileServiceGrpcClient;
 import com.rachvik.clients.TinyURLServiceGrpcClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
-@Import({ClientConfigReader.class, TinyURLServiceGrpcClient.class})
+@Import({ClientConfigReader.class, TinyURLServiceGrpcClient.class, ProfileServiceGrpcClient.class})
 @SpringBootApplication
 public class MasterApplication {
 

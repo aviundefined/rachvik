@@ -1,7 +1,6 @@
 package com.rachvik.master.security.filter;
 
 import com.rachvik.common.utils.StringUtils;
-import com.rachvik.master.security.entity.User;
 import com.rachvik.master.security.service.JWTService;
 import com.rachvik.master.security.service.UserService;
 import jakarta.servlet.FilterChain;
@@ -45,8 +44,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     // then set the authentication
     if (StringUtils.isNonEmpty(username)
         && SecurityContextHolder.getContext().getAuthentication() == null) {
-      final User user = userService.loadUserByUsername(username);
-      if (jwtService.isValid(jwt, user)) {
+      val user = userService.loadUserByUsername(username);
+      if (jwtService.isValid(jwt, user.getEmail())) {
         val authToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
         authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authToken);

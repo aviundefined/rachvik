@@ -1,0 +1,37 @@
+syntax = "proto3";
+option java_multiple_files = true;
+option java_package = "com.rachvik.games.cards.models";
+
+enum Suit {
+  SUIT_UNKNOWN = 0;
+  SUIT_CLUB = 1;
+  SUIT_DIAMOND = 2;
+  SUIT_HEART = 3;
+  SUIT_SPADE = 4;
+}
+
+enum CardValue {
+  CARD_VALUE_UNKNOWN = 0;
+  CARD_VALUE_ACE = 1;
+  CARD_VALUE_TWO = 2;
+  CARD_VALUE_THREE = 3;
+  CARD_VALUE_FOUR = 4;
+  CARD_VALUE_FIVE = 5;
+  CARD_VALUE_SIX = 6;
+  CARD_VALUE_SEVEN = 7;
+  CARD_VALUE_EIGHT = 8;
+  CARD_VALUE_NINE = 9;
+  CARD_VALUE_TEN = 10;
+  CARD_VALUE_JACK = 11;
+  CARD_VALUE_QUEEN = 12;
+  CARD_VALUE_KING = 13;
+}
+
+message Card {
+  Suit suit = 1;
+  CardValue value = 2;
+}
+
+message Deck {
+  repeated Card card = 1;
+}

@@ -1,0 +1,37 @@
+syntax = "proto3";
+option java_multiple_files = true;
+option java_package = "com.rachvik.profile.user.model";
+
+enum Role {
+  ROLE_UNKNOWN = 0;
+  ROLE_USER = 1;
+  ROLE_ADMIN = 2;
+}
+message User {
+  string username = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string password = 4;
+  Role role = 5;
+  bool enabled = 6;
+  bool account_non_expired = 7;
+  bool account_non_locked = 8;
+  bool credentials_non_expired = 9;
+}
+
+message SaveUserRequest {
+  User user = 1;
+}
+
+message SaveUserResponse {
+  bool is_success = 1;
+}
+
+message GetUserRequest {
+  oneof id {
+    string username = 1;
+  }
+}
+message GetUserResponse {
+  User user = 1;
+}

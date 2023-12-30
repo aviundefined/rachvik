@@ -1,6 +1,5 @@
 package com.rachvik.master.models;
 
-import com.rachvik.master.security.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

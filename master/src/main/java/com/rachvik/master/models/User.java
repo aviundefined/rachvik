@@ -1,13 +1,5 @@
-package com.rachvik.master.security.entity;
+package com.rachvik.master.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import java.util.Collection;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -22,22 +14,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-@Table(
-    name = "_user",
-    uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 public class User implements UserDetails {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  private String userId;
 
   private String firstname;
   private String lastname;
   private String email;
   private String password;
-
-  @Enumerated(EnumType.STRING)
   private Role role;
 
   private boolean accountNonExpired;

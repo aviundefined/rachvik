@@ -8,3 +8,13 @@ grpc_config {
   host: "localhost"
   port: 5556
 }
+grpc_config {
+  service: SERVICE_RUMMY
+  host: "localhost"
+  port: 5558
+}
+grpc_config {
+  service: SERVICE_PROFILE
+  host: "localhost"
+  port: 5559
+}
