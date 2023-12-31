@@ -1,12 +1,11 @@
-
 spring:
   cassandra:
     port: 9042
     contact-points: cassandra_server
-    keyspace-name: tinyurl
+    keyspace-name: rummy
     schema-action: create_if_not_exists
 server:
   port: 8084
 grpc:
   server:
-    port: 55598
+    port: 5558

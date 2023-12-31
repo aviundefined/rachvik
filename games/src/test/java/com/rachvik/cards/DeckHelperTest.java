@@ -10,42 +10,39 @@ import com.rachvik.games.cards.models.Suit;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 
-class DeckValidatorTest {
+class DeckHelperTest {
 
   @Test
   public void testValidDeck() {
     // Creating a valid deck with 52 cards, each suit has all card values from ACE to KING
-    val validDeck = createValidDeck();
-    val validator = new DeckValidator();
-    assertDoesNotThrow(() -> validator.isValidNormalDeck(validDeck));
+    val helper = new DeckHelper();
+    val validDeck = helper.createNormalDeck();
+    assertDoesNotThrow(() -> helper.isValidRegularDeck(validDeck));
+  }
+
+  @Test
+  public void testValidDeckWithJokers() {
+    // Creating a valid deck with 52 cards, each suit has all card values from ACE to KING
+    val helper = new DeckHelper();
+    val validDeck = helper.createDeck(2);
+    assertDoesNotThrow(() -> helper.isValidDeck(validDeck, 2));
   }
 
   @Test
   public void testInvalidDeckMissingCardValues() {
     // Creating an invalid deck where a suit is missing some card values
     val invalidDeck = createInvalidDeck();
-    val validator = new DeckValidator();
-    assertThrows(RuntimeException.class, () -> validator.isValidNormalDeck(invalidDeck));
+    val helper = new DeckHelper();
+    assertThrows(RuntimeException.class, () -> helper.isValidRegularDeck(invalidDeck));
   }
 
-  private Deck createValidDeck() {
-    Deck.Builder deckBuilder = Deck.newBuilder();
-
-    // Adding 52 cards, each suit has all card values from ACE to KING
-    for (val suit : Suit.values()) {
-      if (suit == Suit.SUIT_UNKNOWN || suit == Suit.UNRECOGNIZED) {
-        continue;
-      }
-      for (CardValue value : CardValue.values()) {
-        if (value == CardValue.CARD_VALUE_UNKNOWN || value == CardValue.UNRECOGNIZED) {
-          continue;
-        }
-        val cardBuilder = Card.newBuilder().setSuit(suit).setValue(value);
-        deckBuilder.addCard(cardBuilder.build());
-      }
-    }
-
-    return deckBuilder.build();
+  @Test
+  public void testInvalidDeckWithJokers() {
+    // Creating a valid deck with 52 cards, each suit has all card values from ACE to KING
+    val helper = new DeckHelper();
+    val deck = helper.createDeck(2);
+    assertThrows(RuntimeException.class, () -> helper.isValidDeck(deck, 3));
+    assertThrows(RuntimeException.class, () -> helper.isValidDeck(deck, 1));
   }
 
   private Deck createInvalidDeck() {
@@ -61,7 +58,9 @@ class DeckValidatorTest {
         continue;
       }
       for (CardValue value : CardValue.values()) {
-        if (value == CardValue.CARD_VALUE_UNKNOWN || value == CardValue.UNRECOGNIZED) {
+        if (value == CardValue.CARD_VALUE_UNKNOWN
+            || value == CardValue.UNRECOGNIZED
+            || value == CardValue.CARD_VALUE_JOKER) {
           continue;
         }
         Card.Builder cardBuilder = Card.newBuilder().setSuit(suit).setValue(value);

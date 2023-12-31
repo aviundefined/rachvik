@@ -25,6 +25,14 @@ enum CardValue {
   CARD_VALUE_JACK = 11;
   CARD_VALUE_QUEEN = 12;
   CARD_VALUE_KING = 13;
+  CARD_VALUE_JOKER = 14;
+}
+
+enum GameState {
+  GAME_STATE_UNKNOWN = 0;
+  GAME_STATE_NOT_STARTED = 1;
+  GAME_STATE_IN_PROGRESS = 2;
+  GAME_STATE_OVER = 3;
 }
 
 message Card {
@@ -34,4 +42,8 @@ message Card {
 
 message Deck {
   repeated Card card = 1;
+}
+
+message Player {
+  string username = 1;
 }
