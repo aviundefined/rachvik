@@ -56,6 +56,7 @@ public class MoveResolver {
     for (int i = pile.size() - 1; i >= 0; i--) {
       if (pile.get(i).equals(cardToRemove)) {
         pile.remove(i);
+        break;
       }
     }
   }

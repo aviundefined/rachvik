@@ -4,6 +4,7 @@ import com.rachvik.games.cards.rummy.services.RummyCreateGameRequest;
 import com.rachvik.games.cards.rummy.services.RummyGameResponse;
 import com.rachvik.games.cards.rummy.services.RummyMoveRequest;
 import com.rachvik.games.cards.rummy.services.RummyServiceGrpc.RummyServiceImplBase;
+import com.rachvik.games.cards.rummy.services.RummyStartGameRequest;
 import com.rachvik.rummy.services.RummyService;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,13 @@ public class RummyGrpcServiceImpl extends RummyServiceImplBase {
       final RummyCreateGameRequest request,
       final StreamObserver<RummyGameResponse> responseObserver) {
     responseObserver.onNext(service.createGame(request));
+    responseObserver.onCompleted();
+  }
+
+  @Override
+  public void startCame(RummyStartGameRequest request,
+      StreamObserver<RummyGameResponse> responseObserver) {
+    responseObserver.onNext(service.startGame(request));
     responseObserver.onCompleted();
   }
 

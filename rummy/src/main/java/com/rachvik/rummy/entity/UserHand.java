@@ -1,7 +1,6 @@
 package com.rachvik.rummy.entity;
 
-import com.rachvik.games.cards.models.CardValue;
-import com.rachvik.games.cards.models.Suit;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,17 +9,15 @@ import org.springframework.data.cassandra.core.mapping.CassandraType;
 import org.springframework.data.cassandra.core.mapping.CassandraType.Name;
 import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
-@UserDefinedType("card")
+@UserDefinedType("user_hand")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Card {
-  private int deckIdentifier;
+public class UserHand {
+  @CassandraType(type = Name.UDT, userTypeName = "player")
+  private Player player;
 
-  @CassandraType(type = Name.TEXT)
-  private Suit suit;
-
-  @CassandraType(type = Name.TEXT)
-  private CardValue cardValue;
+  @CassandraType(type = Name.UDT)
+  private List<Card> card;
 }

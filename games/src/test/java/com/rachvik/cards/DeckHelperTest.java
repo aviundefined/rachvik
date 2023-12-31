@@ -16,7 +16,7 @@ class DeckHelperTest {
   public void testValidDeck() {
     // Creating a valid deck with 52 cards, each suit has all card values from ACE to KING
     val helper = new DeckHelper();
-    val validDeck = helper.createNormalDeck();
+    val validDeck = helper.createNormalDeck(1);
     assertDoesNotThrow(() -> helper.isValidRegularDeck(validDeck));
   }
 
@@ -24,7 +24,7 @@ class DeckHelperTest {
   public void testValidDeckWithJokers() {
     // Creating a valid deck with 52 cards, each suit has all card values from ACE to KING
     val helper = new DeckHelper();
-    val validDeck = helper.createDeck(2);
+    val validDeck = helper.createDeck(1, 2);
     assertDoesNotThrow(() -> helper.isValidDeck(validDeck, 2));
   }
 
@@ -40,7 +40,7 @@ class DeckHelperTest {
   public void testInvalidDeckWithJokers() {
     // Creating a valid deck with 52 cards, each suit has all card values from ACE to KING
     val helper = new DeckHelper();
-    val deck = helper.createDeck(2);
+    val deck = helper.createDeck(1, 2);
     assertThrows(RuntimeException.class, () -> helper.isValidDeck(deck, 3));
     assertThrows(RuntimeException.class, () -> helper.isValidDeck(deck, 1));
   }

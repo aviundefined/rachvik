@@ -5,6 +5,7 @@ import com.rachvik.games.cards.rummy.models.RummyGame;
 import com.rachvik.games.cards.rummy.services.RummyCreateGameRequest;
 import com.rachvik.games.cards.rummy.services.RummyGameResponse;
 import com.rachvik.games.cards.rummy.services.RummyMoveRequest;
+import com.rachvik.games.cards.rummy.services.RummyStartGameRequest;
 import com.rachvik.id.UniqueIdRequest;
 import com.rachvik.rummy.mappers.MoveMapper;
 import com.rachvik.rummy.repository.MoveRepository;
@@ -25,6 +26,10 @@ public class RummyService {
   private final ConcurrentMap<String, RummyGame.Builder> games = new ConcurrentHashMap<>();
 
   public RummyGameResponse createGame(final RummyCreateGameRequest request) {
+    return null;
+  }
+
+  public RummyGameResponse startGame(final RummyStartGameRequest request) {
     return null;
   }
 

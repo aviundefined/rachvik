@@ -1,22 +1,17 @@
-package com.rachvik.rummy.config;
+package com.rachvik.rummy.converters;
 
 import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.data.UdtValue;
 import com.datastax.oss.driver.api.core.type.UserDefinedType;
 import com.rachvik.rummy.entity.Card;
 import lombok.val;
-import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CardToUdtValueConverter implements Converter<Card, UdtValue> {
-
-  private final CqlSession session;
-  private final String keyspaceName;
+public class CardToUdtValueConverter extends BaseObjectToUdtConverter<Card> {
 
   public CardToUdtValueConverter(final CqlSession session, final String keyspaceName) {
-    this.session = session;
-    this.keyspaceName = keyspaceName;
+    super(session, keyspaceName);
   }
 
   @Override
@@ -30,7 +25,8 @@ public class CardToUdtValueConverter implements Converter<Card, UdtValue> {
 
     return userDefinedType
         .newValue()
-        .setString("suit", source.getSuit())
-        .setString("cardValue", source.getCardValue());
+        .setInt("deck_identifier", source.getDeckIdentifier())
+        .setString("suit", source.getSuit().name())
+        .setString("cardValue", source.getCardValue().name());
   }
 }

@@ -1,5 +1,7 @@
 package com.rachvik.rummy.config;
 
+import com.rachvik.rummy.converters.CardToUdtValueConverter;
+import com.rachvik.rummy.converters.UdtToCardValueConverter;
 import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import lombok.val;

@@ -9,16 +9,21 @@ message RummyCreateGameRequest {
   RummyGameConfig config = 1;
 }
 
-message RummyGameResponse {
-  RummyGame game = 1;
-}
-
 message RummyMoveRequest {
   RummyMove move = 1;
 }
 
+message RummyStartGameRequest {
+  RummyGame game = 1;
+}
+
+message RummyGameResponse {
+  RummyGame game = 1;
+}
+
 service RummyService {
   rpc createGame(RummyCreateGameRequest) returns (RummyGameResponse) {};
+  rpc startCame(RummyStartGameRequest) returns (RummyGameResponse) {};
   rpc recordMove(RummyMoveRequest) returns (RummyGameResponse) {};
 }
 

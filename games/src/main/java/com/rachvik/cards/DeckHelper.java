@@ -47,15 +47,16 @@ public class DeckHelper {
     }
   }
 
-  public Deck createNormalDeck() {
-    val deckBuilder = createNormalDeckInternal();
+  public Deck createNormalDeck(final int deckIdentifier) {
+    val deckBuilder = createNormalDeckInternal(deckIdentifier);
     return deckBuilder.build();
   }
 
-  public Deck createDeck(final int numberOfJokers) {
-    val deckBuilder = createNormalDeckInternal();
+  public Deck createDeck(final int deckIdentifier, final int numberOfJokers) {
+    val deckBuilder = createNormalDeckInternal(deckIdentifier);
     for (int i = 0; i < numberOfJokers; i++) {
-      deckBuilder.addCard(Card.newBuilder().setValue(CardValue.CARD_VALUE_JOKER));
+      deckBuilder.addCard(
+          Card.newBuilder().setDeckIdentifier(deckIdentifier).setValue(CardValue.CARD_VALUE_JOKER));
     }
     return deckBuilder.build();
   }
@@ -92,7 +93,7 @@ public class DeckHelper {
     }
   }
 
-  private static Builder createNormalDeckInternal() {
+  private static Builder createNormalDeckInternal(int deckIdentifier) {
     val deckBuilder = Deck.newBuilder();
     // Adding 52 cards, each suit has all card values from ACE to KING
     for (val suit : Suit.values()) {
@@ -105,7 +106,8 @@ public class DeckHelper {
             || value == CardValue.CARD_VALUE_JOKER) {
           continue;
         }
-        deckBuilder.addCard(Card.newBuilder().setSuit(suit).setValue(value));
+        deckBuilder.addCard(
+            Card.newBuilder().setDeckIdentifier(deckIdentifier).setSuit(suit).setValue(value));
       }
     }
     return deckBuilder;

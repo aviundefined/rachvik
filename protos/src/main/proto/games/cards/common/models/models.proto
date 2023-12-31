@@ -36,8 +36,9 @@ enum GameState {
 }
 
 message Card {
-  Suit suit = 1;
-  CardValue value = 2;
+  int32 deck_identifier = 1;
+  Suit suit = 2;
+  CardValue value = 3;
 }
 
 message Deck {
