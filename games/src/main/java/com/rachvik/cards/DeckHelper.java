@@ -5,6 +5,8 @@ import com.rachvik.games.cards.models.CardValue;
 import com.rachvik.games.cards.models.Deck;
 import com.rachvik.games.cards.models.Deck.Builder;
 import com.rachvik.games.cards.models.Suit;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -49,6 +51,7 @@ public class DeckHelper {
 
   public Deck createNormalDeck(final int deckIdentifier) {
     val deckBuilder = createNormalDeckInternal(deckIdentifier);
+    shuffle(deckBuilder);
     return deckBuilder.build();
   }
 
@@ -58,7 +61,14 @@ public class DeckHelper {
       deckBuilder.addCard(
           Card.newBuilder().setDeckIdentifier(deckIdentifier).setValue(CardValue.CARD_VALUE_JOKER));
     }
+    shuffle(deckBuilder);
     return deckBuilder.build();
+  }
+
+  private void shuffle(final Deck.Builder deckBuilder) {
+    val shuffledCards = new ArrayList<>(deckBuilder.getCardList());
+    Collections.shuffle(shuffledCards);
+    deckBuilder.clearCard().addAllCard(shuffledCards);
   }
 
   private void isValidDeckInternal(Deck deck) {
