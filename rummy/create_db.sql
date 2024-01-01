@@ -42,9 +42,9 @@ CREATE TYPE IF NOT EXISTS rummy.game_state (
     user_hand list<frozen<user_hand>>,
     discarded_pile list<frozen<card>>,
     closed_piles list<frozen<card>>,
-    used list<frozen<card>>,
     number_of_turns_played int,
-    last_move_id bigint
+    last_move_id bigint,
+    last_discarded_card frozen<card>,
 );
 
 CREATE TABLE IF NOT EXISTS rummy.game (

@@ -38,9 +38,9 @@ public class State {
   @CassandraType(type = Name.UDT)
   private List<Card> closedPiles;
 
-  @CassandraType(type = Name.UDT)
-  private List<Card> used;
-
   private int numberOfTurnsPlayed;
   private long lastMoveId;
+
+  @CassandraType(type = Name.UDT, userTypeName = "card")
+  private Card lastDiscardedCard;
 }
