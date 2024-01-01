@@ -20,8 +20,8 @@ public class State {
   @CassandraType(type = Name.TEXT)
   private GameState state;
 
-  @CassandraType(type = Name.UDT, userTypeName = "rummy_deck")
-  private RummyDeck deck;
+  @CassandraType(type = Name.UDT)
+  private List<Card> available;
 
   @CassandraType(type = Name.UDT, userTypeName = "card")
   private Card joker;
@@ -37,6 +37,9 @@ public class State {
 
   @CassandraType(type = Name.UDT)
   private List<Card> closedPiles;
+
+  @CassandraType(type = Name.UDT)
+  private List<Card> used;
 
   private int numberOfTurnsPlayed;
   private long lastMoveId;

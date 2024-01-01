@@ -36,12 +36,13 @@ CREATE TYPE IF NOT EXISTS rummy.game_config (
 
 CREATE TYPE IF NOT EXISTS rummy.game_state (
     state int,
-    deck frozen<rummy_deck>,
+    available list<frozen<card>>,
     joker frozen<card>,
     player list<frozen<player>>,
     user_hand list<frozen<user_hand>>,
     discarded_pile list<frozen<card>>,
     closed_piles list<frozen<card>>,
+    used list<frozen<card>>,
     number_of_turns_played int,
     last_move_id bigint
 );

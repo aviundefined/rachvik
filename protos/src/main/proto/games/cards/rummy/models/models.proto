@@ -4,15 +4,6 @@ option java_package = "com.rachvik.games.cards.rummy.models";
 
 import "games/cards/common/models/models.proto";
 
-message RummyDeck {
-  repeated Deck deck = 1;
-}
-
-message RummyUserHand {
-  Player player = 1;
-  repeated Card card = 2;
-}
-
 message RummyGameConfig {
   int32 min_number_of_players = 1;
   int32 max_number_of_players = 2;
@@ -21,14 +12,15 @@ message RummyGameConfig {
 
 message RummyGameState {
   GameState state = 1;
-  RummyDeck deck = 2;
+  repeated Card available = 2;
   Card joker = 3;
   repeated Player player = 4;
-  repeated RummyUserHand user_hand = 5;
+  repeated UserHand user_hand = 5;
   repeated Card discarded_pile = 6;
   repeated Card closed_piles = 7;
-  int32 number_of_turns_played = 8;
-  int64 last_move_id = 9;
+  repeated Card used = 8;
+  int32 number_of_turns_played = 9;
+  int64 last_move_id = 10;
 }
 
 message RummyGame {

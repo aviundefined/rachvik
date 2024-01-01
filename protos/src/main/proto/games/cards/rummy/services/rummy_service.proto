@@ -14,7 +14,12 @@ message RummyMoveRequest {
 }
 
 message RummyStartGameRequest {
-  RummyGame game = 1;
+  string game_id = 1;
+}
+
+message RummyJoinGameRequest {
+  Player player = 1;
+  string game_id = 2;
 }
 
 message RummyGameResponse {
@@ -23,6 +28,7 @@ message RummyGameResponse {
 
 service RummyService {
   rpc createGame(RummyCreateGameRequest) returns (RummyGameResponse) {};
+  rpc joinGame(RummyJoinGameRequest) returns (RummyGameResponse) {};
   rpc startCame(RummyStartGameRequest) returns (RummyGameResponse) {};
   rpc recordMove(RummyMoveRequest) returns (RummyGameResponse) {};
 }

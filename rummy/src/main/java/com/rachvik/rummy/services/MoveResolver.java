@@ -4,7 +4,6 @@ import com.rachvik.common.utils.CollectionUtils;
 import com.rachvik.games.cards.models.Card;
 import com.rachvik.games.cards.rummy.models.RummyGame;
 import com.rachvik.games.cards.rummy.models.RummyMove;
-import com.rachvik.games.cards.rummy.models.RummyUserHand;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.val;
@@ -29,7 +28,7 @@ public class MoveResolver {
     updatedState.addDiscardedPile(move.getDiscarded());
 
     // Modify user_hand for the player
-    val updatedUserHands = new ArrayList<RummyUserHand>(updatedState.getUserHandList());
+    val updatedUserHands = new ArrayList<>(updatedState.getUserHandList());
     for (int i = 0; i < updatedUserHands.size(); i++) {
       val userHand = updatedUserHands.get(i);
       if (userHand.getPlayer().getUsername().equals(move.getPlayer().getUsername())) {

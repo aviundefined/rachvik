@@ -48,3 +48,8 @@ message Deck {
 message Player {
   string username = 1;
 }
+
+message UserHand {
+  Player player = 1;
+  repeated Card card = 2;
+}
