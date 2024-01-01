@@ -80,8 +80,8 @@ public class RummyService {
     // Set number_of_turns_played to 0
     state.setNumberOfTurnsPlayed(0);
     // Update Joker and First Discarded card in used
-    state.addUsed(joker);
-    state.addUsed(discardedCard);
+    // Update last discarded card state as
+    state.clearLastDiscardedCard().setLastDiscardedCard(discardedCard);
     // last_move_id will be unset as it's not specified in the logic
     game.setState(state);
     this.games.put(game.getGameId(), game);
@@ -89,12 +89,20 @@ public class RummyService {
   }
 
   public RummyGameResponse joinGame(final RummyJoinGameRequest request) {
-    String gameId = request.getGameId();
-    RummyGame.Builder gameBuilder = getGame(gameId);
-
+    val gameId = request.getGameId();
+    val gameBuilder = getGame(gameId);
+    val gameState = gameBuilder.getStateBuilder();
+    if (gameState.getPlayerCount() >= gameBuilder.getConfig().getMaxNumberOfPlayers()) {
+      log.error(
+          "Number of players already reached to max number of allowed player: {}",
+          gameBuilder.getConfig().getMaxNumberOfPlayers());
+      throw new RuntimeException(
+          String.format(
+              "Number of players already reached to max number of allowed player: %s",
+              gameBuilder.getConfig().getMaxNumberOfPlayers()));
+    }
     // Add the player in RummyGameState
     val player = request.getPlayer();
-    val gameState = gameBuilder.getStateBuilder();
     gameState.addPlayer(player);
 
     // Pick randomly 13 cards which are not present in used cards in RummyGameState
@@ -111,9 +119,6 @@ public class RummyService {
     // Remove all the chosen cards from available cards
     availableCards.removeAll(chosenCards);
     gameState.clearAvailable().addAllAvailable(availableCards);
-    val used = new ArrayList<>(gameState.getUsedList());
-    used.addAll(chosenCards);
-    gameState.clearUsed().addAllUsed(used);
     // Update RummyUserHand for the current player with the randomly chosen 13 cards
     val userHand = UserHand.newBuilder().setPlayer(player).addAllCard(chosenCards);
     gameState.addUserHand(userHand);

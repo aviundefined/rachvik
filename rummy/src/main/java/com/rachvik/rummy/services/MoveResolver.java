@@ -1,6 +1,5 @@
 package com.rachvik.rummy.services;
 
-import com.rachvik.common.utils.CollectionUtils;
 import com.rachvik.games.cards.models.Card;
 import com.rachvik.games.cards.rummy.models.RummyGame;
 import com.rachvik.games.cards.rummy.models.RummyMove;
@@ -16,16 +15,18 @@ public class MoveResolver {
       final RummyGame.Builder game, final long moveId, final RummyMove move) {
     val updatedState = game.getState().toBuilder();
     // Remove picked card from appropriate pile
+    val discarded = new ArrayList<>(updatedState.getDiscardedPileList());
+    val available = new ArrayList<>(updatedState.getAvailableList());
     if (move.getIsPickedFromDiscardedPile()) {
-      removeCardFromPile(
-          CollectionUtils.emptyIfNull(updatedState.getDiscardedPileList()), move.getPicked());
+      removeCardFromPile(discarded, move.getPicked());
     } else {
-      removeCardFromPile(
-          CollectionUtils.emptyIfNull(updatedState.getClosedPilesList()), move.getPicked());
+      removeCardFromPile(available, move.getPicked());
     }
 
     // Add discarded card to discarded_pile
-    updatedState.addDiscardedPile(move.getDiscarded());
+    discarded.add(move.getDiscarded());
+    // Set discarded card as last_discarded_car
+    updatedState.clearLastDiscardedCard().setLastDiscardedCard(move.getDiscarded());
 
     // Modify user_hand for the player
     val updatedUserHands = new ArrayList<>(updatedState.getUserHandList());
@@ -33,17 +34,19 @@ public class MoveResolver {
       val userHand = updatedUserHands.get(i);
       if (userHand.getPlayer().getUsername().equals(move.getPlayer().getUsername())) {
         val updatedUserHand = userHand.toBuilder();
-        updatedUserHand.getCardList().remove(move.getDiscarded());
-        updatedUserHand.addCard(move.getPicked());
+        val cards = new ArrayList<>(updatedUserHand.getCardList());
+        cards.remove(move.getDiscarded());
+        cards.add(move.getPicked());
+        updatedUserHand.clearCard().addAllCard(cards);
         updatedUserHands.set(i, updatedUserHand.build());
         break;
       }
     }
+    updatedState.clearAvailable().addAllAvailable(available);
+    updatedState.clearDiscardedPile().addAllDiscardedPile(discarded);
     updatedState.clearUserHand().addAllUserHand(updatedUserHands);
-
     // Increment number_of_turns_played by 1
     updatedState.setNumberOfTurnsPlayed(updatedState.getNumberOfTurnsPlayed() + 1);
-
     // Update last_move_id
     updatedState.setLastMoveId(moveId);
 
