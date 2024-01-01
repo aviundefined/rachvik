@@ -43,4 +43,6 @@ public class State {
 
   @CassandraType(type = Name.UDT, userTypeName = "card")
   private Card lastDiscardedCard;
+
+  private int activePlayerIndex;
 }

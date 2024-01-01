@@ -128,7 +128,33 @@ public class RummyService {
   }
 
   public RummyGameResponse startGame(final RummyStartGameRequest request) {
-    return null;
+    val gameId = request.getGameId();
+    val gameBuilder = getGame(gameId);
+
+    val gameState = gameBuilder.getState().toBuilder();
+    val numPlayers = gameState.getPlayerCount();
+    val gameConfig = gameBuilder.getConfig();
+    val minPlayers = gameConfig.getMinNumberOfPlayers();
+    val maxPlayers = gameConfig.getMaxNumberOfPlayers();
+
+    // Check if the conditions for starting the game are met
+    if (numPlayers < minPlayers
+        || numPlayers > maxPlayers
+        || gameState.getState() != GameState.GAME_STATE_IN_PROGRESS) {
+      // Return an error or handle the condition where the game cannot start
+      throw new RuntimeException("Invalid Game state: +" + gameId);
+    }
+    // Set the game state to GAME_STATE_IN_PROGRESS
+    gameState.setState(GameState.GAME_STATE_IN_PROGRESS);
+
+    // Pick any random index between 0 to Size of Player - 1 from RummyGameState
+    val activePlayerIndex = new Random().nextInt(gameState.getPlayerCount());
+    // Set the randomly chosen index as active_player_index
+    gameState.setActivePlayerIndex(activePlayerIndex);
+
+    // Update the state in the game
+    gameBuilder.setState(gameState);
+    return RummyGameResponse.newBuilder().setGame(gameBuilder).build();
   }
 
   public RummyGameResponse recordMove(final RummyMoveRequest request) {

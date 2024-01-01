@@ -20,6 +20,7 @@ message RummyGameState {
   int32 number_of_turns_played = 7;
   int64 last_move_id = 8;
   Card last_discarded_card = 9;
+  int32 active_player_index = 10;
 }
 
 message RummyGame {

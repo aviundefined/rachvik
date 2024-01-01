@@ -45,6 +45,7 @@ CREATE TYPE IF NOT EXISTS rummy.game_state (
     number_of_turns_played int,
     last_move_id bigint,
     last_discarded_card frozen<card>,
+    active_player_index int
 );
 
 CREATE TABLE IF NOT EXISTS rummy.game (
