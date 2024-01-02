@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConfigToUdtValueConverter extends BaseObjectToUdtConverter<Config> {
 
-  protected ConfigToUdtValueConverter(final CqlSession session, final String keyspaceName) {
+  public ConfigToUdtValueConverter(final CqlSession session, final String keyspaceName) {
     super(session, keyspaceName);
   }
 

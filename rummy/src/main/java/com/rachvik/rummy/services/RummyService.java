@@ -14,7 +14,9 @@ import com.rachvik.games.cards.rummy.services.RummyJoinGameRequest;
 import com.rachvik.games.cards.rummy.services.RummyMoveRequest;
 import com.rachvik.games.cards.rummy.services.RummyStartGameRequest;
 import com.rachvik.id.UniqueIdRequest;
+import com.rachvik.rummy.mappers.GameMapper;
 import com.rachvik.rummy.mappers.MoveMapper;
+import com.rachvik.rummy.repository.GameRepository;
 import com.rachvik.rummy.repository.MoveRepository;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,7 +39,9 @@ public class RummyService {
   private final MoveMapper moveMapper;
   private final IdServiceGrpcClient idServiceGrpcClient;
   private final MoveResolver moveResolver;
+  private final GameRepository gameRepository;
   private final DeckHelper deckHelper;
+  private final GameMapper gameMapper;
   private final ConcurrentMap<String, RummyGame.Builder> games = new ConcurrentHashMap<>();
 
   public RummyGameResponse createGame(final RummyCreateGameRequest request) {
@@ -85,6 +89,7 @@ public class RummyService {
     // last_move_id will be unset as it's not specified in the logic
     game.setState(state);
     this.games.put(game.getGameId(), game);
+    this.gameRepository.save(this.gameMapper.protoToEntity(game));
     return RummyGameResponse.newBuilder().setGame(game).build();
   }
 
@@ -154,6 +159,7 @@ public class RummyService {
 
     // Update the state in the game
     gameBuilder.setState(gameState);
+
     return RummyGameResponse.newBuilder().setGame(gameBuilder).build();
   }
 

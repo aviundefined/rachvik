@@ -7,7 +7,7 @@ CREATE KEYSPACE IF NOT EXISTS rummy
 CREATE TYPE IF NOT EXISTS rummy.card (
     deck_identifier int,
     suit TEXT,
-    cardValue TEXT
+    card_value TEXT
 );
 
 CREATE TYPE IF NOT EXISTS rummy.player (
@@ -41,7 +41,6 @@ CREATE TYPE IF NOT EXISTS rummy.game_state (
     player list<frozen<player>>,
     user_hand list<frozen<user_hand>>,
     discarded_pile list<frozen<card>>,
-    closed_piles list<frozen<card>>,
     number_of_turns_played int,
     last_move_id bigint,
     last_discarded_card frozen<card>,
