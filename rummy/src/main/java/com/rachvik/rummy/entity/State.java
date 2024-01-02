@@ -20,7 +20,7 @@ public class State {
   @CassandraType(type = Name.TEXT)
   private GameState state;
 
-  @CassandraType(type = Name.UDT)
+  @CassandraType(type = Name.UDT, userTypeName = "card")
   private List<Card> available;
 
   @CassandraType(type = Name.UDT, userTypeName = "card")
@@ -29,10 +29,10 @@ public class State {
   @CassandraType(type = Name.UDT, userTypeName = "player")
   private List<Player> player;
 
-  @CassandraType(type = Name.UDT)
+  @CassandraType(type = Name.UDT, userTypeName = "user_hand")
   private List<UserHand> userHand;
 
-  @CassandraType(type = Name.UDT)
+  @CassandraType(type = Name.UDT, userTypeName = "card")
   private List<Card> discardedPile;
 
   private int numberOfTurnsPlayed;

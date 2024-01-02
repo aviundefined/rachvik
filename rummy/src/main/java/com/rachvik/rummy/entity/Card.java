@@ -16,6 +16,7 @@ import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 @AllArgsConstructor
 @Builder
 public class Card {
+  @CassandraType(type = Name.INT)
   private int deckIdentifier;
 
   @CassandraType(type = Name.TEXT)

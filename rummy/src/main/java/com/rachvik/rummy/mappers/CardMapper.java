@@ -7,6 +7,13 @@ import org.springframework.stereotype.Component;
 public class CardMapper {
 
   public Card protoToEntity(com.rachvik.games.cards.models.Card card) {
-    return Card.builder().suit(card.getSuit()).cardValue(card.getValue()).build();
+    if (card == null) {
+      return Card.builder().build();
+    }
+    return Card.builder()
+        .deckIdentifier(card.getDeckIdentifier())
+        .suit(card.getSuit())
+        .cardValue(card.getValue())
+        .build();
   }
 }

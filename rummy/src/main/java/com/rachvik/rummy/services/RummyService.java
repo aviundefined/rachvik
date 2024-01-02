@@ -89,7 +89,7 @@ public class RummyService {
     // last_move_id will be unset as it's not specified in the logic
     game.setState(state);
     this.games.put(game.getGameId(), game);
-    this.gameRepository.save(this.gameMapper.protoToEntity(game));
+    // this.gameRepository.save(this.gameMapper.protoToEntity(game));
     return RummyGameResponse.newBuilder().setGame(game).build();
   }
 

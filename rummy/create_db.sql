@@ -35,7 +35,7 @@ CREATE TYPE IF NOT EXISTS rummy.game_config (
 
 
 CREATE TYPE IF NOT EXISTS rummy.game_state (
-    state int,
+    state TEXT,
     available list<frozen<card>>,
     joker frozen<card>,
     player list<frozen<player>>,

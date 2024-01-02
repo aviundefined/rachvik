@@ -18,6 +18,6 @@ public class UserHand {
   @CassandraType(type = Name.UDT, userTypeName = "player")
   private Player player;
 
-  @CassandraType(type = Name.UDT)
+  @CassandraType(type = Name.UDT, userTypeName = "card")
   private List<Card> card;
 }
