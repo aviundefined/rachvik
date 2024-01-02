@@ -27,15 +27,15 @@ public class StateToUdtValueConverter extends BaseObjectToUdtConverter<State> {
 
     var udtValue = userDefinedType.newValue();
     udtValue = udtValue.setString("state", source.getState().name());
-    udtValue = udtValue.set("joker", source.getJoker(), Card.class);
-    udtValue = udtValue.setList("available", source.getAvailable(), Card.class);
-    udtValue = udtValue.setList("player", source.getPlayer(), Player.class);
-    udtValue = udtValue.setList("user_hand", source.getUserHand(), UserHand.class);
-    udtValue = udtValue.setList("discarded_pile", source.getAvailable(), Card.class);
     udtValue = udtValue.setInt("number_of_turns_played", source.getNumberOfTurnsPlayed());
     udtValue = udtValue.setLong("last_move_id", source.getLastMoveId());
-    udtValue = udtValue.set("last_discarded_card", source.getLastDiscardedCard(), Card.class);
     udtValue = udtValue.setInt("active_player_index", source.getActivePlayerIndex());
+    udtValue = udtValue.setList("player", source.getPlayer(), Player.class);
+    udtValue = udtValue.set("joker", source.getJoker(), Card.class);
+    udtValue = udtValue.setList("available", source.getAvailable(), Card.class);
+    udtValue = udtValue.setList("user_hand", source.getUserHand(), UserHand.class);
+    udtValue = udtValue.setList("discarded_pile", source.getAvailable(), Card.class);
+    udtValue = udtValue.set("last_discarded_card", source.getLastDiscardedCard(), Card.class);
     return udtValue;
   }
 }
