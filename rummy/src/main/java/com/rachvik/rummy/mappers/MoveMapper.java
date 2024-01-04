@@ -10,13 +10,14 @@ import org.springframework.stereotype.Component;
 public class MoveMapper {
 
   private final CardMapper cardMapper;
+  private final PlayerMapper playerMapper;
 
   public Move protoToEntity(final long id, final RummyMove move) {
     return Move.builder()
         .id(id)
         .gameId(move.getGameId())
         .isPickedFromDiscardedPile(move.getIsPickedFromDiscardedPile())
-        .username(move.getPlayer().getUsername())
+        .player(playerMapper.protoToEntity(move.getPlayer()))
         .timestamp(move.getTimestamp())
         .picked(cardMapper.protoToEntity(move.getPicked()))
         .discarded(cardMapper.protoToEntity(move.getDiscarded()))

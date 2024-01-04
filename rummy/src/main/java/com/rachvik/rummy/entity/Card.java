@@ -6,22 +6,21 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.cassandra.core.mapping.CassandraType;
-import org.springframework.data.cassandra.core.mapping.CassandraType.Name;
+import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
-@UserDefinedType("card")
+@UserDefinedType(value = "card")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Card {
-  @CassandraType(type = Name.INT)
+  @Column("deck_identifier")
   private int deckIdentifier;
 
-  @CassandraType(type = Name.TEXT)
+  @Column("suit")
   private Suit suit;
 
-  @CassandraType(type = Name.TEXT)
+  @Column("card_value")
   private CardValue cardValue;
 }

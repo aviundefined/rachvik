@@ -6,8 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.cassandra.core.mapping.CassandraType;
-import org.springframework.data.cassandra.core.mapping.CassandraType.Name;
+import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
 @UserDefinedType("game_state")
@@ -17,29 +16,33 @@ import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 @Builder
 public class State {
 
-  @CassandraType(type = Name.TEXT)
+  @Column("state")
   private GameState state;
 
-  @CassandraType(type = Name.UDT, userTypeName = "card")
+  @Column("available")
   private List<Card> available;
 
-  @CassandraType(type = Name.UDT, userTypeName = "card")
+  @Column("joker")
   private Card joker;
 
-  @CassandraType(type = Name.UDT, userTypeName = "player")
+  @Column("player")
   private List<Player> player;
 
-  @CassandraType(type = Name.UDT, userTypeName = "user_hand")
+  @Column("user_hand")
   private List<UserHand> userHand;
 
-  @CassandraType(type = Name.UDT, userTypeName = "card")
+  @Column("discarded_pile")
   private List<Card> discardedPile;
 
+  @Column("number_of_turns_played")
   private int numberOfTurnsPlayed;
+
+  @Column("last_move_id")
   private long lastMoveId;
 
-  @CassandraType(type = Name.UDT, userTypeName = "card")
+  @Column("last_discarded_card")
   private Card lastDiscardedCard;
 
+  @Column("active_player_index")
   private int activePlayerIndex;
 }

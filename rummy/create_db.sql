@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS rummy.move (
     id BIGINT PRIMARY KEY,
     game_id TEXT,
     timestamp BIGINT,
-    username TEXT,
+    player FROZEN<player>,
     is_picked_from_discarded_pile BOOLEAN,
     picked FROZEN<card>,
     discarded FROZEN<card>

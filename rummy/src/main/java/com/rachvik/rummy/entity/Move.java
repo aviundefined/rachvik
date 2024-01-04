@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.cassandra.core.mapping.CassandraType;
-import org.springframework.data.cassandra.core.mapping.CassandraType.Name;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
@@ -21,15 +19,18 @@ public class Move {
   @Column("game_id")
   private String gameId;
 
+  @Column("timestamp")
   private long timestamp;
-  private String username;
+
+  @Column("username")
+  private Player player;
 
   @Column("is_picked_from_discarded_pile")
   private boolean isPickedFromDiscardedPile;
 
-  @CassandraType(type = Name.UDT, userTypeName = "card")
+  @Column("picked")
   private Card picked;
 
-  @CassandraType(type = Name.UDT, userTypeName = "card")
+  @Column("discarded")
   private Card discarded;
 }
