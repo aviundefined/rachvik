@@ -30,4 +30,23 @@ public class StateMapper {
         .activePlayerIndex(state.getActivePlayerIndex())
         .build();
   }
+
+  public RummyGameState entityToProto(State state) {
+    if (state == null) {
+      return RummyGameState.newBuilder().build();
+    }
+    return RummyGameState.newBuilder()
+        .setState(state.getState())
+        .addAllAvailable(state.getAvailable().stream().map(cardMapper::entityToProto).toList())
+        .setJoker(cardMapper.entityToProto(state.getJoker()))
+        .addAllPlayer(state.getPlayer().stream().map(playerMapper::entityToProto).toList())
+        .addAllUserHand(state.getUserHand().stream().map(userHandMapper::entityToProto).toList())
+        .addAllDiscardedPile(
+            state.getDiscardedPile().stream().map(cardMapper::entityToProto).toList())
+        .setNumberOfTurnsPlayed(state.getNumberOfTurnsPlayed())
+        .setLastMoveId(state.getLastMoveId())
+        .setLastDiscardedCard(cardMapper.entityToProto(state.getLastDiscardedCard()))
+        .setActivePlayerIndex(state.getActivePlayerIndex())
+        .build();
+  }
 }

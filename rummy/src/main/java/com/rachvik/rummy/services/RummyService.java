@@ -89,11 +89,7 @@ public class RummyService {
     // last_move_id will be unset as it's not specified in the logic
     game.setState(state);
     this.games.put(game.getGameId(), game);
-    try {
-      this.gameRepository.save(this.gameMapper.protoToEntity(game));
-    } catch (final Exception e) {
-      log.error("Error in saving game. ", e);
-    }
+    saveGame(game);
     return RummyGameResponse.newBuilder().setGame(game).build();
   }
 
@@ -131,7 +127,7 @@ public class RummyService {
     // Update RummyUserHand for the current player with the randomly chosen 13 cards
     val userHand = UserHand.newBuilder().setPlayer(player).addAllCard(chosenCards);
     gameState.addUserHand(userHand);
-
+    saveGame(gameBuilder);
     // Assuming this method builds the response based on the gameBuilder
     return RummyGameResponse.newBuilder().setGame(gameBuilder).build();
   }
@@ -149,7 +145,7 @@ public class RummyService {
     // Check if the conditions for starting the game are met
     if (numPlayers < minPlayers
         || numPlayers > maxPlayers
-        || gameState.getState() != GameState.GAME_STATE_IN_PROGRESS) {
+        || gameState.getState() != GameState.GAME_STATE_NOT_STARTED) {
       // Return an error or handle the condition where the game cannot start
       throw new RuntimeException("Invalid Game state: +" + gameId);
     }
@@ -163,7 +159,7 @@ public class RummyService {
 
     // Update the state in the game
     gameBuilder.setState(gameState);
-
+    saveGame(gameBuilder);
     return RummyGameResponse.newBuilder().setGame(gameBuilder).build();
   }
 
@@ -177,12 +173,12 @@ public class RummyService {
             .getUniqueId(
                 UniqueIdRequest.newBuilder().setServiceName(request.getMove().getGameId()).build())
             .getId();
-    val gameBuilder =
-        this.games.computeIfAbsent(request.getMove().getGameId(), k -> RummyGame.newBuilder());
+    val gameBuilder = getGame(request.getMove().getGameId());
     this.games.put(
         request.getMove().getGameId(), moveResolver.resolve(gameBuilder, id, request.getMove()));
     val move = moveMapper.protoToEntity(id, request.getMove());
     moveRepository.save(move);
+    saveGame(gameBuilder);
     return RummyGameResponse.newBuilder()
         .setGame(this.games.get(request.getMove().getGameId()))
         .build();
@@ -191,9 +187,11 @@ public class RummyService {
   private RummyGame.Builder getGame(final String gameId) {
     val builder = this.games.get(gameId);
     if (builder == null) {
-      // TODO Avinash: Write a code to fetch the game state from DB.
-      // If not found in DB then only throw exception
-      throw new RuntimeException("Game not found: " + gameId);
+      val game =
+          this.gameRepository
+              .findById(gameId)
+              .orElseThrow(() -> new RuntimeException("Game not found: " + gameId));
+      return gameMapper.entityToProto(game).toBuilder();
     }
     return builder;
   }
@@ -204,6 +202,14 @@ public class RummyService {
         cards.remove(i);
         break;
       }
+    }
+  }
+
+  private void saveGame(RummyGame.Builder game) {
+    try {
+      this.gameRepository.save(this.gameMapper.protoToEntity(game));
+    } catch (final Exception e) {
+      log.error("Error in saving game. ", e);
     }
   }
 }

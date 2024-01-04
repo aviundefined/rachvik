@@ -19,4 +19,14 @@ public class UserHandMapper {
         .card(userHand.getCardList().stream().map(cardMapper::protoToEntity).toList())
         .build();
   }
+
+  public UserHand entityToProto(com.rachvik.rummy.entity.UserHand userHand) {
+    if (userHand == null) {
+      return UserHand.newBuilder().build();
+    }
+    return UserHand.newBuilder()
+        .setPlayer(playerMapper.entityToProto(userHand.getPlayer()))
+        .addAllCard(userHand.getCard().stream().map(cardMapper::entityToProto).toList())
+        .build();
+  }
 }

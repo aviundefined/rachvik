@@ -12,4 +12,11 @@ public class PlayerMapper {
     }
     return com.rachvik.rummy.entity.Player.builder().username(player.getUsername()).build();
   }
+
+  public Player entityToProto(com.rachvik.rummy.entity.Player player) {
+    if (player == null) {
+      return Player.newBuilder().build();
+    }
+    return Player.newBuilder().setUsername(player.getUsername()).build();
+  }
 }

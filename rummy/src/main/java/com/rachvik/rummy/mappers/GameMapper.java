@@ -10,8 +10,21 @@ import org.springframework.stereotype.Component;
 public class GameMapper {
 
   private final StateMapper stateMapper;
+  private final ConfigMapper configMapper;
 
   public Game protoToEntity(RummyGame.Builder game) {
-    return Game.builder().state(stateMapper.protoToEntity(game.getState())).build();
+    return Game.builder()
+        .gameId(game.getGameId())
+        .state(stateMapper.protoToEntity(game.getState()))
+        .config(configMapper.protoToEntity(game.getConfig()))
+        .build();
+  }
+
+  public RummyGame entityToProto(final Game game) {
+    return RummyGame.newBuilder()
+        .setGameId(game.getGameId())
+        .setState(stateMapper.entityToProto(game.getState()))
+        .setConfig(configMapper.entityToProto(game.getConfig()))
+        .build();
   }
 }

@@ -22,7 +22,7 @@ public class Move {
   @Column("timestamp")
   private long timestamp;
 
-  @Column("username")
+  @Column("player")
   private Player player;
 
   @Column("is_picked_from_discarded_pile")

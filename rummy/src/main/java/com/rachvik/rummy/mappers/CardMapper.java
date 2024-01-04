@@ -16,4 +16,15 @@ public class CardMapper {
         .cardValue(card.getValue())
         .build();
   }
+
+  public com.rachvik.games.cards.models.Card entityToProto(Card card) {
+    if (card == null) {
+      return com.rachvik.games.cards.models.Card.newBuilder().build();
+    }
+    return com.rachvik.games.cards.models.Card.newBuilder()
+        .setDeckIdentifier(card.getDeckIdentifier())
+        .setSuit(card.getSuit())
+        .setValue(card.getCardValue())
+        .build();
+  }
 }
