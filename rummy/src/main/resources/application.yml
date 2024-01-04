@@ -4,6 +4,14 @@ spring:
     contact-points: cassandra_server
     keyspace-name: rummy
     schema-action: create_if_not_exists
+  data:
+    mongodb:
+      username: avinash
+      password: avinash
+      host: localhost
+      port: 27017
+      database: rummy
+      authentication-database: admin
 server:
   port: 8084
 grpc:

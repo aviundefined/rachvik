@@ -1,17 +1,9 @@
 package com.rachvik.rummy.config;
 
 import com.rachvik.rummy.converters.CardToUdtValueConverter;
-import com.rachvik.rummy.converters.ConfigToUdtValueConverter;
-import com.rachvik.rummy.converters.DeckToUdtValueConverter;
 import com.rachvik.rummy.converters.PlayerToUdtValueConverter;
-import com.rachvik.rummy.converters.StateToUdtValueConverter;
 import com.rachvik.rummy.converters.UdtValueToCardConverter;
-import com.rachvik.rummy.converters.UdtValueToConfigConverter;
-import com.rachvik.rummy.converters.UdtValueToDeckConverter;
 import com.rachvik.rummy.converters.UdtValueToPlayerConverter;
-import com.rachvik.rummy.converters.UdtValueToStateConverter;
-import com.rachvik.rummy.converters.UdtValueToUserHandConverter;
-import com.rachvik.rummy.converters.UserHandToUdtValueConverter;
 import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -56,17 +48,9 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
         new CassandraCustomConversions(
             Arrays.asList(
                 new CardToUdtValueConverter(session, getKeyspaceName()),
-                new ConfigToUdtValueConverter(session, getKeyspaceName()),
-                new DeckToUdtValueConverter(session, getKeyspaceName()),
                 new PlayerToUdtValueConverter(session, getKeyspaceName()),
-                new StateToUdtValueConverter(session, getKeyspaceName()),
-                new UserHandToUdtValueConverter(session, getKeyspaceName()),
                 new UdtValueToCardConverter(),
-                new UdtValueToConfigConverter(),
-                new UdtValueToDeckConverter(),
-                new UdtValueToPlayerConverter(),
-                new UdtValueToStateConverter(),
-                new UdtValueToUserHandConverter())));
+                new UdtValueToPlayerConverter())));
     return convertor;
   }
 }
