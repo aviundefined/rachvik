@@ -99,7 +99,7 @@ public class RummyService {
     val gameId = request.getGameId();
     val gameBuilder = getGame(gameId);
     val gameState = gameBuilder.getStateBuilder();
-    gameValidator.validateJoinGameRequest(gameState, gameBuilder);
+    gameValidator.validateJoinGameRequest(gameBuilder);
     // Add the player in RummyGameState
     val player = request.getPlayer();
     gameState.addPlayer(player);

@@ -3,7 +3,6 @@ package com.rachvik.rummy.validator;
 import com.rachvik.games.cards.models.GameState;
 import com.rachvik.games.cards.rummy.models.RummyGame;
 import com.rachvik.games.cards.rummy.models.RummyGameState;
-import com.rachvik.games.cards.rummy.models.RummyGameState.Builder;
 import com.rachvik.games.cards.rummy.models.RummyMove;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -28,15 +27,15 @@ public class GameValidator {
     }
   }
 
-  public void validateJoinGameRequest(Builder gameState, RummyGame.Builder gameBuilder) {
-    if (gameState.getPlayerCount() >= gameBuilder.getConfig().getMaxNumberOfPlayers()) {
+  public void validateJoinGameRequest(final RummyGame.Builder game) {
+    if (game.getState().getPlayerCount() >= game.getConfig().getMaxNumberOfPlayers()) {
       log.error(
           "Number of players already reached to max number of allowed player: {}",
-          gameBuilder.getConfig().getMaxNumberOfPlayers());
+          game.getConfig().getMaxNumberOfPlayers());
       throw new RuntimeException(
           String.format(
               "Number of players already reached to max number of allowed player: %s",
-              gameBuilder.getConfig().getMaxNumberOfPlayers()));
+              game.getConfig().getMaxNumberOfPlayers()));
     }
   }
 
