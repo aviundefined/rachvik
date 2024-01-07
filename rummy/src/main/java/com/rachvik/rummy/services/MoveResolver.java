@@ -2,6 +2,7 @@ package com.rachvik.rummy.services;
 
 import com.rachvik.games.cards.models.Card;
 import com.rachvik.games.cards.rummy.models.RummyGame;
+import com.rachvik.games.cards.rummy.models.RummyGameState;
 import com.rachvik.games.cards.rummy.models.RummyMove;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,7 @@ public class MoveResolver {
         break;
       }
     }
+    setNextActivePlayer(move, updatedState);
     updatedState.clearAvailable().addAllAvailable(available);
     updatedState.clearDiscardedPile().addAllDiscardedPile(discarded);
     updatedState.clearUserHand().addAllUserHand(updatedUserHands);
@@ -52,6 +54,20 @@ public class MoveResolver {
 
     // Build the updated game
     return game.clearState().setState(updatedState);
+  }
+
+  private void setNextActivePlayer(final RummyMove move, final RummyGameState.Builder state) {
+    int currentPlayerIdx = -1;
+    for (int i = 0; i < state.getPlayerCount(); i++) {
+      if (move.getPlayer().getUsername().equals(state.getPlayer(i).getUsername())) {
+        currentPlayerIdx = i;
+      }
+    }
+    int nextPlayerIdx = currentPlayerIdx + 1;
+    if (nextPlayerIdx == state.getPlayerCount()) {
+      nextPlayerIdx = 0;
+    }
+    state.setActivePlayerIndex(nextPlayerIdx);
   }
 
   private void removeCardFromPile(final List<Card> pile, final Card cardToRemove) {

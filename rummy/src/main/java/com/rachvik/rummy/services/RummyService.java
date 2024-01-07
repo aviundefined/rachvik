@@ -18,6 +18,7 @@ import com.rachvik.rummy.mappers.GameMapper;
 import com.rachvik.rummy.mappers.MoveMapper;
 import com.rachvik.rummy.repository.GameRepository;
 import com.rachvik.rummy.repository.MoveRepository;
+import com.rachvik.rummy.validator.GameValidator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -42,6 +43,7 @@ public class RummyService {
   private final GameRepository gameRepository;
   private final DeckHelper deckHelper;
   private final GameMapper gameMapper;
+  private final GameValidator gameValidator;
   private final ConcurrentMap<String, RummyGame.Builder> games = new ConcurrentHashMap<>();
 
   public RummyGameResponse createGame(final RummyCreateGameRequest request) {
@@ -97,15 +99,7 @@ public class RummyService {
     val gameId = request.getGameId();
     val gameBuilder = getGame(gameId);
     val gameState = gameBuilder.getStateBuilder();
-    if (gameState.getPlayerCount() >= gameBuilder.getConfig().getMaxNumberOfPlayers()) {
-      log.error(
-          "Number of players already reached to max number of allowed player: {}",
-          gameBuilder.getConfig().getMaxNumberOfPlayers());
-      throw new RuntimeException(
-          String.format(
-              "Number of players already reached to max number of allowed player: %s",
-              gameBuilder.getConfig().getMaxNumberOfPlayers()));
-    }
+    gameValidator.validateJoinGameRequest(gameState, gameBuilder);
     // Add the player in RummyGameState
     val player = request.getPlayer();
     gameState.addPlayer(player);
@@ -142,13 +136,7 @@ public class RummyService {
     val minPlayers = gameConfig.getMinNumberOfPlayers();
     val maxPlayers = gameConfig.getMaxNumberOfPlayers();
 
-    // Check if the conditions for starting the game are met
-    if (numPlayers < minPlayers
-        || numPlayers > maxPlayers
-        || gameState.getState() != GameState.GAME_STATE_NOT_STARTED) {
-      // Return an error or handle the condition where the game cannot start
-      throw new RuntimeException("Invalid Game state: +" + gameId);
-    }
+    gameValidator.validateGameStartRequest(numPlayers, minPlayers, maxPlayers, gameState, gameId);
     // Set the game state to GAME_STATE_IN_PROGRESS
     gameState.setState(GameState.GAME_STATE_IN_PROGRESS);
 
@@ -167,13 +155,14 @@ public class RummyService {
     if (!request.hasMove()) {
       throw new RuntimeException("Invalid move request: " + request);
     }
+    val gameBuilder = getGame(request.getMove().getGameId());
+    gameValidator.validateMove(gameBuilder, request.getMove());
     val id =
         idServiceGrpcClient
             .getStub()
             .getUniqueId(
                 UniqueIdRequest.newBuilder().setServiceName(request.getMove().getGameId()).build())
             .getId();
-    val gameBuilder = getGame(request.getMove().getGameId());
     this.games.put(
         request.getMove().getGameId(), moveResolver.resolve(gameBuilder, id, request.getMove()));
     val move = moveMapper.protoToEntity(id, request.getMove());
