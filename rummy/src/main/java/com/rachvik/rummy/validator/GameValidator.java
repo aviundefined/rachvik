@@ -1,9 +1,11 @@
 package com.rachvik.rummy.validator;
 
 import com.rachvik.games.cards.models.GameState;
+import com.rachvik.games.cards.models.Player;
 import com.rachvik.games.cards.rummy.models.RummyGame;
 import com.rachvik.games.cards.rummy.models.RummyGameState;
 import com.rachvik.games.cards.rummy.models.RummyMove;
+import com.rachvik.games.cards.rummy.services.RummyPickCardRequest;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.stereotype.Component;
@@ -40,18 +42,32 @@ public class GameValidator {
   }
 
   public void validateMove(final RummyGame.Builder game, final RummyMove move) {
+    validateGameInProgress(game);
+    validateCurrentActivePlayer(game, move.getPlayer());
+  }
+
+  public void validatePickCardRequest(
+      final RummyGame.Builder game, final RummyPickCardRequest request) {
+    validateGameInProgress(game);
+    validateCurrentActivePlayer(game, request.getPlayer());
+  }
+
+  private void validateCurrentActivePlayer(final RummyGame.Builder game, final Player request) {
+    val activePlayer = game.getState().getPlayer(game.getState().getActivePlayerIndex());
+    if (!activePlayer.getUsername().equals(request.getUsername())) {
+      throw new RuntimeException(
+          String.format(
+              "Current active player: %s is not same as player: %s who requested move",
+              activePlayer.getUsername(), request.getUsername()));
+    }
+  }
+
+  private void validateGameInProgress(final RummyGame.Builder game) {
     if (game.getState().getState() != GameState.GAME_STATE_IN_PROGRESS) {
       throw new RuntimeException("Game not in progress so move can't be recorded");
     }
     if (game.getState().getActivePlayerIndex() == -1) {
       throw new RuntimeException("Active player index not set in game");
-    }
-    val activePlayer = game.getState().getPlayer(game.getState().getActivePlayerIndex());
-    if (!activePlayer.getUsername().equals(move.getPlayer().getUsername())) {
-      throw new RuntimeException(
-          String.format(
-              "Current active player: %s is not same as player: %s who requested move",
-              activePlayer.getUsername(), move.getPlayer().getUsername()));
     }
   }
 }

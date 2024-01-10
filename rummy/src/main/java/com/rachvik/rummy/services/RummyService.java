@@ -7,11 +7,13 @@ import com.rachvik.games.cards.models.Card;
 import com.rachvik.games.cards.models.GameState;
 import com.rachvik.games.cards.models.UserHand;
 import com.rachvik.games.cards.rummy.models.RummyGame;
+import com.rachvik.games.cards.rummy.models.RummyGame.Builder;
 import com.rachvik.games.cards.rummy.models.RummyGameState;
 import com.rachvik.games.cards.rummy.services.RummyCreateGameRequest;
 import com.rachvik.games.cards.rummy.services.RummyGameResponse;
 import com.rachvik.games.cards.rummy.services.RummyJoinGameRequest;
 import com.rachvik.games.cards.rummy.services.RummyMoveRequest;
+import com.rachvik.games.cards.rummy.services.RummyPickCardRequest;
 import com.rachvik.games.cards.rummy.services.RummyStartGameRequest;
 import com.rachvik.id.UniqueIdRequest;
 import com.rachvik.rummy.mappers.GameMapper;
@@ -149,6 +151,13 @@ public class RummyService {
     gameBuilder.setState(gameState);
     saveGame(gameBuilder);
     return RummyGameResponse.newBuilder().setGame(gameBuilder).build();
+  }
+
+  public RummyGameResponse pickCard(final RummyPickCardRequest request) {
+    val game = getGame(request.getGameId());
+    gameValidator.validatePickCardRequest(game, request);
+    moveResolver.pickCard(game, request);
+    return null;
   }
 
   public RummyGameResponse recordMove(final RummyMoveRequest request) {

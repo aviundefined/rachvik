@@ -26,10 +26,17 @@ message RummyGameResponse {
   RummyGame game = 1;
 }
 
+message RummyPickCardRequest {
+  string game_id = 1;
+  Player player = 2;
+  bool pick_from_discard_pile = 3;
+}
+
 service RummyService {
   rpc createGame(RummyCreateGameRequest) returns (RummyGameResponse) {};
   rpc joinGame(RummyJoinGameRequest) returns (RummyGameResponse) {};
   rpc startCame(RummyStartGameRequest) returns (RummyGameResponse) {};
+  rpc pickCard(RummyPickCardRequest) returns (RummyGameResponse) {};
   rpc recordMove(RummyMoveRequest) returns (RummyGameResponse) {};
 }
 

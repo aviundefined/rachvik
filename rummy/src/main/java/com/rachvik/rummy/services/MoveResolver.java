@@ -4,6 +4,7 @@ import com.rachvik.games.cards.models.Card;
 import com.rachvik.games.cards.rummy.models.RummyGame;
 import com.rachvik.games.cards.rummy.models.RummyGameState;
 import com.rachvik.games.cards.rummy.models.RummyMove;
+import com.rachvik.games.cards.rummy.services.RummyPickCardRequest;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.val;
@@ -77,5 +78,34 @@ public class MoveResolver {
         break;
       }
     }
+  }
+
+  public void pickCard(final RummyGame.Builder game, final RummyPickCardRequest request) {
+    // If in RummyPickCardRequest -> pick_from_discard_pile is true then pick the last discarded
+    // add last_discarded_card into player hand. if that's false then pick the first card from
+    // available card and add in user hand. this will be intermediate state as player hand will
+    // have 14 cards. so don't update the available cards and last discard card now that will be
+    // update in when user would record its move. That's done on purpose if user drops in between
+    // then last discard and available card state would be retained.
+    val updatedUserHands = new ArrayList<>(game.getState().getUserHandList());
+    for (int i = 0; i < updatedUserHands.size(); i++) {
+      if (updatedUserHands
+          .get(i)
+          .getPlayer()
+          .getUsername()
+          .equals(request.getPlayer().getUsername())) {
+        val currentUserHand = updatedUserHands.get(i).toBuilder();
+        val cards = new ArrayList<>(currentUserHand.getCardList());
+        if (request.getPickFromDiscardPile()) {
+          cards.add(game.getState().getLastDiscardedCard());
+        } else {
+          cards.add(game.getState().getAvailable(0));
+        }
+        currentUserHand.clearCard().addAllCard(cards);
+        updatedUserHands.set(i, currentUserHand.build());
+        break;
+      }
+    }
+    game.getStateBuilder().clearUserHand().addAllUserHand(updatedUserHands);
   }
 }
